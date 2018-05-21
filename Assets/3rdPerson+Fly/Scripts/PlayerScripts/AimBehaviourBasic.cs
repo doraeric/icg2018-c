@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Input = CharacterInput;
 
 // AimBehaviour inherits from GenericBehaviour. This class corresponds to aim and strafe behaviour.
 public class AimBehaviourBasic : GenericBehaviour
@@ -12,6 +13,7 @@ public class AimBehaviourBasic : GenericBehaviour
 
 	private int aimBool;                                                  // Animator variable related to aiming.
 	private bool aim;                                                     // Boolean to determine whether or not the player is aiming.
+	[SerializeField]Shooter weapon;
 
 	// Start is always called after any Awake functions.
 	void Start ()
@@ -45,6 +47,18 @@ public class AimBehaviourBasic : GenericBehaviour
 
 		// Set aim boolean on the Animator Controller.
 		behaviourManager.GetAnim.SetBool (aimBool, aim);
+
+		// Weapon control
+		if (weapon != null) {
+			if (aim) {
+				weapon.weaponAim(true);
+			} else {
+				weapon.weaponAim(false);
+			}
+			if (Input.GetButton("Fire1")) {
+				weapon.Fire();
+			}
+		}
 	}
 
 	// Co-rountine to start aiming mode with delay.
@@ -120,16 +134,16 @@ public class AimBehaviourBasic : GenericBehaviour
 
 	}
 
- 	// Draw the crosshair when aiming.
-	void OnGUI () 
+	// Draw the crosshair when aiming.
+	void OnGUI ()
 	{
 		if (crosshair)
 		{
 			float mag = behaviourManager.GetCamScript.GetCurrentPivotMagnitude(aimPivotOffset);
 			if (mag < 0.05f)
 				GUI.DrawTexture(new Rect(Screen.width / 2 - (crosshair.width * 0.5f),
-										 Screen.height / 2 - (crosshair.height * 0.5f),
-										 crosshair.width, crosshair.height), crosshair);
+							Screen.height / 2 - (crosshair.height * 0.5f),
+							crosshair.width, crosshair.height), crosshair);
 		}
 	}
 }

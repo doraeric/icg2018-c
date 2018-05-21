@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using Input = CharacterInput;
 
 // This class corresponds to the 3rd person camera features.
-public class ThirdPersonOrbitCamBasic : MonoBehaviour 
+public class ThirdPersonOrbitCamBasic : MonoBehaviour
 {
 	public Transform player;                                           // Player's reference.
 	public Vector3 pivotOffset = new Vector3(0.0f, 1.0f,  0.0f);       // Offset to repoint the camera.
@@ -9,7 +10,7 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 	public float smooth = 10f;                                         // Speed of camera responsiveness.
 	public float horizontalAimingSpeed = 6f;                           // Horizontal turn speed.
 	public float verticalAimingSpeed = 6f;                             // Vertical turn speed.
-	public float maxVerticalAngle = 30f;                               // Camera max clamp angle. 
+	public float maxVerticalAngle = 30f;                               // Camera max clamp angle.
 	public float minVerticalAngle = -60f;                              // Camera min clamp angle.
 	public string XAxis = "Analog X";                                  // The default horizontal axis input name.
 	public string YAxis = "Analog Y";                                  // The default vertical axis input name.
@@ -52,6 +53,9 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 		ResetTargetOffsets ();
 		ResetFOV ();
 		ResetMaxVerticalAngle();
+
+		// Assign to GameManager
+		GameManager.Instance.tpsCamera = this;
 	}
 
 	void Update()
@@ -81,10 +85,10 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 		for(float zOffset = targetCamOffset.z; zOffset <= 0; zOffset += 0.5f)
 		{
 			noCollisionOffset.z = zOffset;
-			if (DoubleViewingPosCheck (baseTempPosition + aimRotation * noCollisionOffset, Mathf.Abs(zOffset)) || zOffset == 0) 
+			if (DoubleViewingPosCheck (baseTempPosition + aimRotation * noCollisionOffset, Mathf.Abs(zOffset)) || zOffset == 0)
 			{
 				break;
-			} 
+			}
 		}
 
 		// Repostition the camera.
@@ -161,12 +165,12 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 	bool ViewingPosCheck (Vector3 checkPos, float deltaPlayerHeight)
 	{
 		RaycastHit hit;
-		
+
 		// If a raycast from the check position to the player hits something...
 		if(Physics.Raycast(checkPos, player.position+(Vector3.up* deltaPlayerHeight) - checkPos, out hit, relCameraPosMag))
 		{
 			// ... if it is not the player...
-			if(hit.transform != player && !hit.transform.GetComponent<Collider>().isTrigger)
+			if(hit.transform != player && !CheckTriggerInChildren(hit))
 			{
 				// This position isn't appropriate.
 				return false;
@@ -183,7 +187,7 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 
 		if(Physics.Raycast(player.position+(Vector3.up* deltaPlayerHeight), checkPos - player.position, out hit, maxDistance))
 		{
-			if(hit.transform != player && hit.transform != transform && !hit.transform.GetComponent<Collider>().isTrigger)
+			if(hit.transform != player && hit.transform != transform && !CheckTriggerInChildren(hit))
 			{
 				return false;
 			}
@@ -195,5 +199,14 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 	public float GetCurrentPivotMagnitude(Vector3 finalPivotOffset)
 	{
 		return Mathf.Abs ((finalPivotOffset - smoothPivotOffset).magnitude);
+	}
+
+	bool CheckTriggerInChildren(RaycastHit hit) {
+		Collider[] colliders = hit.transform.GetComponentsInChildren<Collider>();
+		foreach (Collider collider in colliders) {
+			if (collider.isTrigger)
+				return true;
+		}
+		return false;
 	}
 }

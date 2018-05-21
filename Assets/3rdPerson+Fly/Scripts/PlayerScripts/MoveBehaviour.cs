@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Input = CharacterInput;
 
 // MoveBehaviour inherits from GenericBehaviour. This class corresponds to basic walk and run behaviour, it is the default behaviour.
 public class MoveBehaviour : GenericBehaviour
@@ -18,7 +19,7 @@ public class MoveBehaviour : GenericBehaviour
 	private bool isColliding;                       // Boolean to determine if the player has collided with an obstacle.
 
 	// Start is always called after any Awake functions.
-	void Start() 
+	void Start()
 	{
 		// Set up the references.
 		jumpBool = Animator.StringToHash("Jump");
