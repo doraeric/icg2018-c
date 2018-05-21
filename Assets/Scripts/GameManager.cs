@@ -12,41 +12,21 @@ public class GameManager {
 			if (_Instance == null) {
 				_Instance = new GameManager();
 				_Instance._gameObject = new GameObject("GameManager");
-				_Instance._gameObject.AddComponent<InputController>();
 			}
 			return _Instance;
 		}
 	}
 
-	private InputController _InputController;
-	public InputController InputController {
-		get {
-			if (_InputController == null)
-				_InputController = _gameObject.GetComponent<InputController>();
-			return _InputController;
-		}
-	}
 
 	private BasicBehaviour _LocalPlayer;
 	public BasicBehaviour LocalPlayer {
-		get {
-			return _LocalPlayer;
-		}
-		set {
-			_LocalPlayer = value;
-			/*if (OnLocalPlayerJoined != null)
-				OnLocalPlayerJoined(_LocalPlayer);
-				*/
-		}
+		get { return _LocalPlayer; }
+		set { _LocalPlayer = value; }
 	}
 
-	private GameObject _tpsCamera;
-	public GameObject tpsCamera {
-		get {
-			return _tpsCamera;
-		}
-		set {
-			_tpsCamera = value;
-		}
+	private ThirdPersonOrbitCamBasic _tpsCamera;
+	public ThirdPersonOrbitCamBasic tpsCamera {
+		get { return _tpsCamera; }
+		set { _tpsCamera = value; }
 	}
 }

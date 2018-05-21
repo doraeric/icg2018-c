@@ -1,0 +1,5 @@
+{
+	"IgnoredCodeIssues": [
+		"^Name should have prefix '_'. \\(Rule 'Fields'\\).$"
+	]
+}

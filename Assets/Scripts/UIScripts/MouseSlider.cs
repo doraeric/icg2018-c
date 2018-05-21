@@ -10,6 +10,7 @@ public class MouseSlider : MonoBehaviour {
 	}
 
 	public void OnValueChange() {
-		GameManager.Instance.InputController.MouseSensitive = mouseSlider.value;
+		GameManager.Instance.tpsCamera.horizontalAimingSpeed = mouseSlider.value;
+		GameManager.Instance.tpsCamera.verticalAimingSpeed = mouseSlider.value;
 	}
 }
