@@ -4,64 +4,62 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthPanel : MonoBehaviour {
-	Skill sk1, sk2; 
+	PlayerSkill playerSkill;
+	SkillUI sk1, sk2;
 	Text hp;
-	//float sk1Time, sk2Time;
 
-	void getUI () {
-		hp = this.gameObject.transform.Find("HP/Text").GetComponent<Text>();
-
-		sk1.go = this.gameObject.transform.Find("Skill1").gameObject;
-		sk1.text = this.gameObject.transform.Find("Skill1/Text").GetComponent<Text>();
-		sk1.img = sk1.go.GetComponent<Image>();
-
-		sk2.go = this.gameObject.transform.Find("Skill2").gameObject;
-		sk2.text = this.gameObject.transform.Find("Skill2/Text").GetComponent<Text>();
-		sk2.img = sk2.go.GetComponent<Image>();
+	void showWhite(SkillUI sk) {
+		Debug.Log("showWhite");
+		sk.go.SetActive(true);
+		sk.img.color = new Color32(225, 225, 225, 160);
 	}
 
-	struct Skill {
+	void showRed(SkillUI sk) {
+		sk.go.SetActive(true);
+		sk.img.color = new Color32(225, 0, 0, 160);
+	}
+	void hideUI(SkillUI sk) {
+		sk.go.SetActive(false);
+	}
+
+	void Start() {
+		getUI();
+		PlayerHealth playerHealth = GameManager.Instance.LocalPlayer.GetComponent<PlayerHealth>();
+		hp.text = "HP " + playerHealth.HP;
+		playerHealth.onHit.AddListener( delegate {
+			hp.text = "HP " + playerHealth.HP;
+		});
+		playerSkill = GameManager.Instance.LocalPlayer.GetComponent<PlayerSkill>();
+		playerSkill.onSkill1Ready.AddListener( delegate {
+			hideUI(sk1);
+		});
+		playerSkill.onSkill1Start.AddListener( delegate {
+			showWhite(sk1);
+		});
+		playerSkill.onSkill1Stop.AddListener( delegate {
+			showRed(sk1);
+		});
+		playerSkill.onSkill2Start.AddListener( delegate {
+			showRed(sk2);
+		});
+		playerSkill.onSkill2Ready.AddListener( delegate {
+			hideUI(sk2);
+		});
+	}
+
+	void getUI () {
+		hp       = gameObject.transform.Find("HP/Text").GetComponent<Text>();
+		sk1.go   = gameObject.transform.Find("Skill1").gameObject;
+		sk1.text = gameObject.transform.Find("Skill1/Text").GetComponent<Text>();
+		sk1.img  = sk1.go.GetComponent<Image>();
+		sk2.go   = gameObject.transform.Find("Skill2").gameObject;
+		sk2.text = gameObject.transform.Find("Skill2/Text").GetComponent<Text>();
+		sk2.img  = sk2.go.GetComponent<Image>();
+	}
+	struct SkillUI {
 		public GameObject go;
 		public Image img;
 		public Text text;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-
-	public void SetHP(float value) {
-		if (hp == null)
-			getUI();
-		hp.text = "HP " + value;
-	}
-
-	public void SetSk1Time(float duration, float coolTime) {
-		Debug.Log("SetSk1Time");
-		Debug.Log(sk1.go.name);
-		StartCoroutine(showWhite(sk1, new WaitForSeconds(duration), new WaitForSeconds(coolTime - duration)));
-	}
-
-	public void SetSk2Time(float coolTime) {
-		StartCoroutine(showRed(sk2, new WaitForSeconds(coolTime)));
-	}
-
-	private IEnumerator showWhite(Skill sk, WaitForSeconds t1, WaitForSeconds t2) {
-		Debug.Log("showWhite");
-		sk.go.SetActive(true);
-		sk.img.color = new Color32(225, 225, 225, 160);
-
-		yield return t1;
-		StartCoroutine(showRed(sk, t2));
-	}
-
-	private IEnumerator showRed(Skill sk, WaitForSeconds t) {
-		sk.go.SetActive(true);
-		sk.img.color = new Color32(225, 0, 0, 160);
-
-		yield return t;
-		sk.go.SetActive(false);
-	}
 }

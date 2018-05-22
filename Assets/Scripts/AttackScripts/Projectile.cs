@@ -40,11 +40,11 @@ public class Projectile : MonoBehaviour {
 		}
 
 		if (other.tag == "Player") {
-			
+
 			BasicBehaviour player = GameManager.Instance.LocalPlayer;
-			PlayerHealth ph = player.GetComponent<PlayerHealth>();
-			if (ph.Intangible) {
-				Debug.Log ("hide " + ph.Intangible);
+			PlayerSkill pk = player.GetComponent<PlayerSkill>();
+			if (pk.skill1working) {
+				Debug.Log ("Player are intangible now!");
 				return;
 			}
 		}

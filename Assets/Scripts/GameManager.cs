@@ -12,6 +12,7 @@ public class GameManager {
 			if (_Instance == null) {
 				_Instance = new GameManager();
 				_Instance._gameObject = new GameObject("GameManager");
+				_Instance._gameObject.AddComponent<GameController>();
 			}
 			return _Instance;
 		}
