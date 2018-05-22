@@ -83,11 +83,12 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 73efeedfa50e74925b12bc14c786b396, type: 2}
+  - {fileID: 2100000, guid: 98b142ec9a7cc4fa791dc88ca562465d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,6 +99,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -121,11 +123,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1103169760606080}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 584dacb50ddbb4c1ba3a907b77dd67a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 535c72873da1343609c58844ce47a847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rateOfFire: 0.5
-  projectile: {fileID: 114203816506953364, guid: 47a430bf1c1454f57af20ff56323f891,
+  projectile: {fileID: 114203816506953364, guid: b1a8965e6243e4aec84aecc41cdcf663,
     type: 2}
   isPlayer: 0
   muzzle: {fileID: 0}
@@ -137,10 +139,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1103169760606080}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3fbb925cc5be4762ba3cdd7ac28e776, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c7746b9169c34377a9590ee08e419f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectDist: 20
+  detectDist: 10
 --- !u!114 &114609012967056764
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -149,10 +151,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1103169760606080}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd630a338fb2e4a509e63cce1c089271, type: 3}
+  m_Script: {fileID: 11500000, guid: 264692d12cb7848b991d3f91852058cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 15
+  hitPoints: 5
 --- !u!135 &135003264823378018
 SphereCollider:
   m_ObjectHideFlags: 1
