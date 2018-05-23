@@ -172,9 +172,11 @@ public class UIManager {
 		if (show) {
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
+			CharacterInput.lock_input = true;
 		} else {
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
+			CharacterInput.lock_input = false;
 		}
 	}
 }
