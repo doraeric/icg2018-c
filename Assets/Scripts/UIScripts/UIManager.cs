@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager {
-
 	public GameObject CanvasRoot;
+	public bool autoCursorVisibility;
 
 	private string UI_GAMEPANEL_ROOT = "Prefabs/GamePanel/";
 	private static UIManager _instance;
@@ -18,11 +18,14 @@ public class UIManager {
 		}
 	}
 
-	public Dictionary<string, GameObject> m_PanelList = new Dictionary<string, GameObject>();
+	public Dictionary<string, BasePanel> m_PanelList = new Dictionary<string, BasePanel>();
 
 	public bool IsClear() {
-		if (IsPaneVisible("PausePanel") || IsPaneVisible("WeaponWheel"))
-			return false;
+		foreach (KeyValuePair<string, BasePanel> item in m_PanelList) {
+			if (item.Value.NeedCursor && item.Value.gameObject.activeSelf) {
+				return false;
+			}
+		}
 		return true;
 	}
 
@@ -36,65 +39,86 @@ public class UIManager {
 		}
 	}
 
-	public bool IsPanelLive(string name) {
+	public bool IsPanelCreated(string name) {
 		return m_PanelList.ContainsKey(name);
 	}
 
 	public bool IsPaneVisible(string name) {
-		return m_PanelList[name].activeSelf;
+		return m_PanelList[name].gameObject.activeSelf;
 	}
 
-	public GameObject ShowPanel(string name) {
+	public BasePanel CreatePanel(string name) {
 		if (CheckCanvasRootIsNull())
 			return null;
 
-		if (IsPanelLive(name)) {
-			Debug.LogErrorFormat("[{0}] is Showing, if you want to show, please close first!!", name);
+		if (IsPanelCreated(name)) {
+			Debug.LogErrorFormat("[{0}] is Created, if you want to show, please close first!!", name);
 			return null;
 		}
 
-		GameObject loadGo = Resources.Load<GameObject>(UI_GAMEPANEL_ROOT + name);
+		BasePanel loadGo = Resources.Load<BasePanel>(UI_GAMEPANEL_ROOT + name);
 		if (loadGo == null)
 			return null;
-		
-		GameObject panel = InstantiateGameObject(CanvasRoot, loadGo);
+
+		BasePanel panel = InstantiateBasePanel(CanvasRoot, loadGo);
 		panel.name = name;
 
 		m_PanelList.Add(name, panel);
-		showCursor(true);
+		if (autoCursorVisibility && panel.NeedCursor) {
+			showCursor(true);
+		}
 
 		return panel;
 	}
 
+	public void TogglePanel(string name) {
+		if (IsPaneVisible(name)) {
+			TogglePanel(name, false);
+		} else {
+			TogglePanel(name, true);
+		}
+	}
+
 	public void TogglePanel(string name, bool isOn) {
-		if (IsPanelLive(name)) {
+		if (IsPanelCreated(name)) {
 			if (m_PanelList[name] != null) {
-				m_PanelList[name].SetActive(isOn);
-				if (IsClear()) {
-					showCursor(false);
-				} else {
-				showCursor(true);
+				m_PanelList[name].gameObject.SetActive(isOn);
+				if (autoCursorVisibility) {
+					if (IsClear()) {
+						showCursor(false);
+					} else {
+						showCursor(true);
+					}
 				}
 			}
 		} else {
-			Debug.LogErrorFormat("TogglePanel [{0}] not found.", name);
+			BasePanel ret = CreatePanel(name);
+			m_PanelList[name].gameObject.SetActive(isOn);
+			if (!ret)
+				Debug.LogErrorFormat("TogglePanel [{0}] not found.", name);
 		}
 	}
 
 	public void ClosePanel(string name) {
-		if (IsPanelLive(name)) {
+		if (IsPanelCreated(name)) {
 			if (m_PanelList[name] != null)
 				Object.Destroy(m_PanelList[name]);
 
 			m_PanelList.Remove(name);
-			showCursor(false);
+			if (autoCursorVisibility) {
+				if (IsClear()) {
+					showCursor(false);
+				} else {
+					showCursor(true);
+				}
+			}
 		} else {
 			Debug.LogErrorFormat("ClosePanel [{0}] not found.", name);
 		}
 	}
 
 	public void CloseAllPanel() {
-		foreach (KeyValuePair<string, GameObject> item in m_PanelList) {
+		foreach (KeyValuePair<string, BasePanel> item in m_PanelList) {
 			if (item.Value != null)
 				Object.Destroy(item.Value);
 		}
@@ -109,6 +133,10 @@ public class UIManager {
 		RectTransform trans = CanvasRoot.transform as RectTransform;
 
 		return trans.sizeDelta;
+	}
+
+	BasePanel InstantiateBasePanel(GameObject parent, BasePanel prefab) {
+		return InstantiateGameObject(parent, prefab.gameObject).GetComponent<BasePanel>();
 	}
 
 	GameObject InstantiateGameObject(GameObject parent, GameObject prefab) {

@@ -1,34 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
 	void Start() {
-		Cursor.lockState = CursorLockMode.Locked;
-		Cursor.visible = false;
-
-		UIManager.Instance.ShowPanel("HealthPanel");
-		UIManager.Instance.ShowPanel("WeaponWheel");
-		UIManager.Instance.ShowPanel("PausePanel");
+		UIManager.Instance.autoCursorVisibility = true;
+		UIManager.Instance.CreatePanel("HealthPanel");
+		UIManager.Instance.CreatePanel("WeaponWheel");
+		UIManager.Instance.CreatePanel("PausePanel");
 		UIManager.Instance.TogglePanel("PausePanel", false);
 		UIManager.Instance.TogglePanel("WeaponWheel", false);
 	}
 
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Escape)) {
-			if (UIManager.Instance.IsPaneVisible("PausePanel")) {
-				UIManager.Instance.TogglePanel("PausePanel", false);
+		if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q)) {
+			if (UIManager.Instance.IsPaneVisible("WeaponWheel")) {
+				UIManager.Instance.TogglePanel("WeaponWheel");
 			} else {
-				UIManager.Instance.TogglePanel("PausePanel", true);
+				UIManager.Instance.TogglePanel("PausePanel");
 			}
 		}
 		if (Input.GetKeyDown(KeyCode.Tab)){
-			if (!UIManager.Instance.IsPaneVisible("WeaponWheel") &&
-				!UIManager.Instance.IsPaneVisible("PausePanel")) {
-				UIManager.Instance.TogglePanel("WeaponWheel", true);
-			} else if (UIManager.Instance.IsPaneVisible("WeaponWheel")) {
-				UIManager.Instance.TogglePanel("WeaponWheel", false);
+			if (!UIManager.Instance.IsPaneVisible("PausePanel")) {
+				UIManager.Instance.TogglePanel("WeaponWheel");
 			}
 		}
 	}

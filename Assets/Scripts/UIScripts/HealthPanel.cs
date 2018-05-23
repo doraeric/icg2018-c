@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthPanel : MonoBehaviour {
+public class HealthPanel : BasePanel {
+	public override bool NeedCursor {
+		get { return false; }
+	}
+
 	PlayerSkill playerSkill;
 	SkillUI sk1, sk2;
 	Text hp;
