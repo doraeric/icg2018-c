@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PausePanel : BasePanel {
 	[SerializeField]Button resumeButton;
@@ -18,8 +19,8 @@ public class PausePanel : BasePanel {
 		UIManager.Instance.TogglePanel("PausePanel", false);
 	}
 	public void QuitGame() {
-		// TODO FIXME
-		Application.Quit();
+		UIManager.Instance.CloseAllPanel();
+		SceneManager.LoadScene("BeginScene", LoadSceneMode.Single);
 	}
 	public void ChangeMouseSensitivity(float value) {
 		GameManager.Instance.tpsCamera.horizontalAimingSpeed = value;

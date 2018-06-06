@@ -11,6 +11,9 @@ public class GameManager {
 		get {
 			if (_Instance == null) {
 				_Instance = new GameManager();
+			}
+			// happen when change scene
+			if (_Instance._gameObject == null) {
 				_Instance._gameObject = new GameObject("GameManager");
 				_Instance._gameObject.AddComponent<GameController>();
 			}
