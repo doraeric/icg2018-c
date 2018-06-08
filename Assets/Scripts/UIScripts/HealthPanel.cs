@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HealthPanel : BasePanel {
+	[SerializeField]bool showHP;
+
 	public override bool NeedCursor {
 		get { return false; }
 	}
@@ -11,9 +14,10 @@ public class HealthPanel : BasePanel {
 	PlayerSkill playerSkill;
 	SkillUI sk1, sk2;
 	Text hp;
+	GameObject blood1, blood2, dead;
+	bool playerDead;
 
 	void showWhite(SkillUI sk) {
-		Debug.Log("showWhite");
 		sk.go.SetActive(true);
 		sk.img.color = new Color32(225, 225, 225, 160);
 	}
@@ -29,9 +33,33 @@ public class HealthPanel : BasePanel {
 	void Start() {
 		getUI();
 		PlayerHealth playerHealth = GameManager.Instance.LocalPlayer.GetComponent<PlayerHealth>();
-		hp.text = "HP " + playerHealth.HP;
-		playerHealth.onHit.AddListener( delegate {
+
+		// HP info
+		if (showHP) {
 			hp.text = "HP " + playerHealth.HP;
+			playerHealth.onHit.AddListener( delegate {
+				hp.text = "HP " + playerHealth.HP;
+			});
+		}
+
+		// Blood splatter effect
+		playerHealth.onHit.AddListener( delegate {
+			if (playerHealth.HP > 6f) {
+				blood1.SetActive(false);
+				blood2.SetActive(false);
+				dead.SetActive(false);
+			} else if (playerHealth.HP <= 6f && playerHealth.HP > 3f) {
+				blood1.SetActive(true);
+				blood2.SetActive(false);
+				dead.SetActive(false);
+			} else if (playerHealth.HP <= 3f && playerHealth.HP > 0f) {
+				blood1.SetActive(true);
+				blood2.SetActive(true);
+				dead.SetActive(false);
+			} else {
+				dead.SetActive(true);
+				playerDead = true;
+			}
 		});
 		playerSkill = GameManager.Instance.LocalPlayer.GetComponent<PlayerSkill>();
 		playerSkill.onSkill1Ready.AddListener( delegate {
@@ -59,6 +87,12 @@ public class HealthPanel : BasePanel {
 		sk2.go   = gameObject.transform.Find("Skill2").gameObject;
 		sk2.text = gameObject.transform.Find("Skill2/Text").GetComponent<Text>();
 		sk2.img  = sk2.go.GetComponent<Image>();
+		blood1   = gameObject.transform.Find("Blood1").gameObject;
+		blood2   = gameObject.transform.Find("Blood2").gameObject;
+		dead     = gameObject.transform.Find("Dead").gameObject;
+		if (!showHP) {
+			gameObject.transform.Find("HP").gameObject.SetActive(false);
+		}
 	}
 	struct SkillUI {
 		public GameObject go;
@@ -66,4 +100,12 @@ public class HealthPanel : BasePanel {
 		public Text text;
 	}
 
+	void Update() {
+		if (playerDead && Input.anyKeyDown) {
+			UIManager.Instance.CloseAllPanel();
+			// Sometimes unity editor cannot load the scene whose build
+			// index is less than the current one. Maybe it's a bug?
+			SceneManager.LoadScene("BeginScene", LoadSceneMode.Single);
+		}
+	}
 }

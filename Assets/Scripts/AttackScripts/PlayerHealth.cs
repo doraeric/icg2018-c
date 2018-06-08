@@ -17,6 +17,6 @@ public class PlayerHealth : Destructable {
 
 	public override void Die() {
 		// call ui
-		Application.Quit();
+		// Controll in HealthPanel
 	}
 }

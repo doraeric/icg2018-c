@@ -124,6 +124,8 @@ public class UIManager {
 		}
 
 		m_PanelList.Clear();
+		if (autoCursorVisibility)
+			showCursor(true);
 	}
 
 	public Vector2 GetCanvasSize() {
