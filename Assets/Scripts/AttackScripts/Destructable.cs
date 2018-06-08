@@ -4,6 +4,7 @@ using UnityEngine;
 public class Destructable : MonoBehaviour {
 
 	[SerializeField]float hitPoints = 5;
+	[SerializeField]bool damageInfo;
 
 	float damageTaken;
 
@@ -25,7 +26,8 @@ public class Destructable : MonoBehaviour {
 
 	public virtual void TakeDamege(float amount) {
 		damageTaken += amount;
-		Debug.Log (name + " hp: " + HitPointRemaining);
+		if (damageInfo)
+			Debug.Log (name + " hp: " + HitPointRemaining);
 
 		if (!isAlive) {
 			Die();

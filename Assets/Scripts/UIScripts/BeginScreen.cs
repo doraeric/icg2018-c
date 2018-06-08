@@ -8,5 +8,6 @@ public class BeginScreen : MonoBehaviour {
 	}
 	public void StopGame() {
 		Application.Quit();
+		Debug.Log("BeginScreen: Application.Quit()");
 	}
 }

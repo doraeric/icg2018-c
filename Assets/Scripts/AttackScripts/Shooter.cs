@@ -7,6 +7,7 @@ public class Shooter : MonoBehaviour {
 	[SerializeField]float rateOfFire;
 	[SerializeField]Projectile projectile;
 	[SerializeField]bool isPlayer;
+	[SerializeField]bool projectileVerbose;
 
 	[HideInInspector]
 	public Transform muzzle;
@@ -26,7 +27,7 @@ public class Shooter : MonoBehaviour {
 			return;
 		nextFireAllowed = Time.time + rateOfFire;
 
-		Instantiate(projectile, muzzle.position, muzzle.rotation);
+		Instantiate(projectile, muzzle.position, muzzle.rotation).verbose = projectileVerbose;
 		canFire = true;
 	}
 

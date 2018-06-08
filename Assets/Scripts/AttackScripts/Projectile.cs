@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour {
 	[SerializeField]float speed;
 	[SerializeField]float timeToLive;
 	[SerializeField]float damage;
+	public bool verbose;
 
 	void Start() {
 		Destroy(gameObject, timeToLive);
@@ -18,7 +19,8 @@ public class Projectile : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision) {
 		// should never happen, all goes to trigger
-		Debug.Log("OnCollisionEnter");
+		if (verbose)
+			Debug.Log("OnCollisionEnter");
 		Destroy(gameObject);
 	}
 
@@ -26,7 +28,8 @@ public class Projectile : MonoBehaviour {
 
 		// hit walls
 		if (!other.isTrigger && other.tag != "Player") {
-			Debug.Log("hit walls");
+			if (verbose)
+				Debug.Log("hit walls");
 			Destroy(gameObject);
 			return;
 		}
@@ -35,7 +38,8 @@ public class Projectile : MonoBehaviour {
 		if (destructable == null)
 			destructable = other.transform.GetComponentInParent<Destructable>();
 		if (destructable == null) {
-			Debug.Log(other.name + " is not destructable");
+			if (verbose)
+				Debug.Log(other.name + " is not destructable");
 			return;
 		}
 
@@ -44,7 +48,8 @@ public class Projectile : MonoBehaviour {
 			BasicBehaviour player = GameManager.Instance.LocalPlayer;
 			PlayerSkill pk = player.GetComponent<PlayerSkill>();
 			if (pk.skill1working) {
-				Debug.Log ("Player are intangible now!");
+				if (verbose)
+					Debug.Log ("Player are intangible now!");
 				return;
 			}
 		}
