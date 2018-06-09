@@ -52,7 +52,8 @@ public class MoveBehaviour : GenericBehaviour
 		JumpManagement();
 	}
 
-	// Execute the idle and walk/run jump movements.
+    // Execute the idle and walk/run jump movements.
+    public GameObject Jumpmusic;
 	void JumpManagement()
 	{
 		// Start a new jump.
@@ -71,6 +72,7 @@ public class MoveBehaviour : GenericBehaviour
 				float velocity = 2f * Mathf.Abs(Physics.gravity.y) * jumpHeight;
 				velocity = Mathf.Sqrt(velocity);
 				behaviourManager.GetRigidBody.AddForce(Vector3.up * velocity, ForceMode.VelocityChange);
+                Instantiate(Jumpmusic, Vector2.zero, Quaternion.identity);
 			}
 		}
 		// Is already jumping?
@@ -80,7 +82,8 @@ public class MoveBehaviour : GenericBehaviour
 			if (!behaviourManager.IsGrounded() && !isColliding && behaviourManager.GetTempLockStatus())
 			{
 				behaviourManager.GetRigidBody.AddForce(transform.forward * jumpIntertialForce * Physics.gravity.magnitude * sprintSpeed, ForceMode.Acceleration);
-			}
+                
+            }
 			// Has landed?
 			if ((behaviourManager.GetRigidBody.velocity.y < 0) && behaviourManager.IsGrounded())
 			{
