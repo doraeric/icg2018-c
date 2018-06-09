@@ -115,6 +115,7 @@ MonoBehaviour:
   speed: 2
   timeToLive: 10
   damage: 1
+  verbose: 0
 --- !u!114 &114809436943546834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -127,6 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoints: 1
+  damageInfo: 0
 --- !u!135 &135779782068851686
 SphereCollider:
   m_ObjectHideFlags: 1

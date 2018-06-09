@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Projectile : MonoBehaviour {
 	[SerializeField]float speed;
 	[SerializeField]float timeToLive;
-	[SerializeField]float damage;
+	[SerializeField]int damage;
 	public bool verbose;
 
 	void Start() {

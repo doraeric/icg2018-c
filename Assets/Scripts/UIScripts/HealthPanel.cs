@@ -44,23 +44,13 @@ public class HealthPanel : BasePanel {
 
 		// Blood splatter effect
 		playerHealth.onHit.AddListener( delegate {
-			if (playerHealth.HP > 6f) {
-				blood1.SetActive(false);
-				blood2.SetActive(false);
-				dead.SetActive(false);
-			} else if (playerHealth.HP <= 6f && playerHealth.HP > 3f) {
-				blood1.SetActive(true);
-				blood2.SetActive(false);
-				dead.SetActive(false);
-			} else if (playerHealth.HP <= 3f && playerHealth.HP > 0f) {
-				blood1.SetActive(true);
-				blood2.SetActive(true);
-				dead.SetActive(false);
-			} else {
-				dead.SetActive(true);
-				playerDead = true;
-			}
+			UpdateSplatter(playerHealth);
 		});
+		playerHealth.onHeal.AddListener( delegate {
+			UpdateSplatter(playerHealth);
+		});
+
+		// Player skill effect
 		playerSkill = GameManager.Instance.LocalPlayer.GetComponent<PlayerSkill>();
 		playerSkill.onSkill1Ready.AddListener( delegate {
 			hideUI(sk1);
@@ -94,6 +84,26 @@ public class HealthPanel : BasePanel {
 			gameObject.transform.Find("HP").gameObject.SetActive(false);
 		}
 	}
+
+	void UpdateSplatter(PlayerHealth playerHealth) {
+		if (playerHealth.HP > 5) {
+			blood1.SetActive(false);
+			blood2.SetActive(false);
+			dead.SetActive(false);
+		} else if (playerHealth.HP <= 5 && playerHealth.HP > 3) {
+			blood1.SetActive(true);
+			blood2.SetActive(false);
+			dead.SetActive(false);
+		} else if (playerHealth.HP <= 3 && playerHealth.HP > 0) {
+			blood1.SetActive(true);
+			blood2.SetActive(true);
+			dead.SetActive(false);
+		} else {
+			dead.SetActive(true);
+			playerDead = true;
+		}
+	}
+
 	struct SkillUI {
 		public GameObject go;
 		public Image img;

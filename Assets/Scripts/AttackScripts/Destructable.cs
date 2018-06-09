@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class Destructable : MonoBehaviour {
 
-	[SerializeField]float hitPoints = 5;
-	[SerializeField]bool damageInfo;
+	[SerializeField]int hitPoints = 5;
+	[SerializeField]protected bool damageInfo;
 
-	float damageTaken;
+	protected int damageTaken;
 
-	public float HitPointRemaining {
+	public int HitPointRemaining {
 		get {
 			return hitPoints - damageTaken;
 		}
@@ -24,7 +24,7 @@ public class Destructable : MonoBehaviour {
 		gameObject.SetActive(false);
 	}
 
-	public virtual void TakeDamege(float amount) {
+	public virtual void TakeDamege(int amount) {
 		damageTaken += amount;
 		if (damageInfo)
 			Debug.Log (name + " hp: " + HitPointRemaining);

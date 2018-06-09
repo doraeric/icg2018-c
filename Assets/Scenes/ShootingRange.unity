@@ -603,6 +603,7 @@ MonoBehaviour:
   projectile: {fileID: 114497280950871650, guid: b8cd6def988e04846a6f9727e7d0b713,
     type: 2}
   isPlayer: 1
+  projectileVerbose: 0
   muzzle: {fileID: 0}
 --- !u!120 &1327220820
 LineRenderer:
@@ -908,8 +909,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8445abe386e743609c1936b85b4792d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 20
+  hitPoints: 10
+  damageInfo: 0
   onHit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onHeal:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
