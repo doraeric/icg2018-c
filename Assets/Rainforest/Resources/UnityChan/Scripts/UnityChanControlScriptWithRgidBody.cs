@@ -63,8 +63,8 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 		orgColHight = col.height;
 		orgVectColCenter = col.center;
 }
-	
-	
+
+    public GameObject Jumpmusic;
 // 以下、メイン処理.リジッドボディと絡めるので、FixedUpdate内で処理を行う.
 	void FixedUpdate ()
 	{
@@ -90,7 +90,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 		}
 		
 		if (Input.GetButtonDown("Jump")) {	// スペースキーを入力したら
-
+            Instantiate(Jumpmusic, Vector2.zero, Quaternion.identity);
 			//アニメーションのステートがLocomotionの最中のみジャンプできる
 			if (currentBaseState.nameHash == locoState){
 				//ステート遷移中でなかったらジャンプできる
