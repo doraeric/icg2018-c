@@ -28,7 +28,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 	// 旋回速度
 	public float rotateSpeed = 2.0f;
 	// ジャンプ威力
-	public float jumpPower = 1.0f; 
+	public float jumpPower = 3.0f; 
 	// キャラクターコントローラ（カプセルコライダ）の参照
 	private CapsuleCollider col;
 	private Rigidbody rb;
@@ -123,7 +123,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 		// 現在のベースレイヤーがjumpStateの時
 		else if(currentBaseState.nameHash == jumpState)
 		{
-			// cameraObject.SendMessage("setCameraPositionJumpView");	// ジャンプ中のカメラに変更
+			cameraObject.SendMessage("setCameraPositionJumpView");	// ジャンプ中のカメラに変更
 			// ステートがトランジション中でない場合
 			if(!anim.IsInTransition(0))
 			{
