@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class doorController : MonoBehaviour {
 
-	public Animator[] doors;
+	public Animator door;
 
 	// Use this for initialization
 	void Start () {
@@ -13,21 +13,18 @@ public class doorController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKey(KeyCode.O)){
-			for(int i=0;i<doors.Length;i++){
-				openTheDoor(doors[i]);
-			}
-		}else{
-			for(int i=0;i<doors.Length;i++){
-				closeTheDoor(doors[i]);
-			}
+		
+	}
+
+	void OnTriggerEnter (Collider other){
+		if (other.tag == "Player"){
+			door.SetBool("character_nearby", true);
 		}
 	}
 
-	void openTheDoor(Animator door){
-		door.SetBool("character_nearby", true);
-	}
-	void closeTheDoor(Animator door){
-		door.SetBool("character_nearby", false);
+	void OnTriggerExit (Collider other){
+		if (other.tag == "Player"){
+			door.SetBool("character_nearby", false);
+		}
 	}
 }
