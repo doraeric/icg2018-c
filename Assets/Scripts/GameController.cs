@@ -3,13 +3,15 @@
 public class GameController : MonoBehaviour {
 
 	void Start() {
+		BasePanel pause;
 		UIManager.Instance.autoCursorVisibility = true;
 		UIManager.Instance.CreatePanel("HealthPanel");
 		UIManager.Instance.CreatePanel("WeaponWheel");
-		UIManager.Instance.EventSystemRoot.firstSelectedGameObject =
-			UIManager.Instance.CreatePanel("PausePanel").FirstSelected;
+		pause = UIManager.Instance.CreatePanel("PausePanel");
 		UIManager.Instance.TogglePanel("PausePanel", false);
 		UIManager.Instance.TogglePanel("WeaponWheel", false);
+		if (UIManager.Instance.EventSystemRoot)
+			UIManager.Instance.EventSystemRoot.firstSelectedGameObject = pause.FirstSelected;
 	}
 
 	void Update () {
