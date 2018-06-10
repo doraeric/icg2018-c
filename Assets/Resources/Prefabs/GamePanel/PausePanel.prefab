@@ -456,6 +456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2a108fba9f94b0ea4463d7d395c343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FirstSelected: {fileID: 1315595697004130}
   resumeButton: {fileID: 114110377756587288}
   quitButton: {fileID: 114714057108872108}
   sensitivitySlider: {fileID: 114581391396758964}

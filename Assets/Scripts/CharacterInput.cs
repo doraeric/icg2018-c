@@ -5,6 +5,12 @@ public static class CharacterInput {
 	public static float GetAxis(string axisName) {
 		return lock_input ? 0f : Input.GetAxis(axisName);
 	}
+	public static bool GetAxisPos(string axisName) {
+		return !lock_input && Input.GetAxis(axisName) > 0f;
+	}
+	public static bool GetAxisNeg(string axisName) {
+		return !lock_input && Input.GetAxis(axisName) < 0f;
+	}
 	public static float GetAxisRaw(string axisName) {
 		return lock_input ? 0f : Input.GetAxisRaw(axisName);
 	}

@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UIManager {
 	public GameObject CanvasRoot;
+	public EventSystem EventSystemRoot;
 	public bool autoCursorVisibility;
 
 	private string UI_GAMEPANEL_ROOT = "Prefabs/GamePanel/";

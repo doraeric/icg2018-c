@@ -117,5 +117,13 @@ public class HealthPanel : BasePanel {
 			// index is less than the current one. Maybe it's a bug?
 			SceneManager.LoadScene("BeginScene", LoadSceneMode.Single);
 		}
+
+		// Put here because when controlled by joystick, player skill panel is never active
+		if (CharacterInput.GetAxisNeg("SkillX")) {
+			GameManager.Instance.LocalPlayer.GetComponent<PlayerSkill>().StartSkill1();
+		}
+		if (CharacterInput.GetAxisPos("SkillX")) {
+			GameManager.Instance.LocalPlayer.GetComponent<PlayerSkill>().StartSkill2();
+		}
 	}
 }

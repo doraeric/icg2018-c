@@ -6,13 +6,14 @@ public class GameController : MonoBehaviour {
 		UIManager.Instance.autoCursorVisibility = true;
 		UIManager.Instance.CreatePanel("HealthPanel");
 		UIManager.Instance.CreatePanel("WeaponWheel");
-		UIManager.Instance.CreatePanel("PausePanel");
+		UIManager.Instance.EventSystemRoot.firstSelectedGameObject =
+			UIManager.Instance.CreatePanel("PausePanel").FirstSelected;
 		UIManager.Instance.TogglePanel("PausePanel", false);
 		UIManager.Instance.TogglePanel("WeaponWheel", false);
 	}
 
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q)) {
+		if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Cancel")) {
 			if (UIManager.Instance.IsPaneVisible("WeaponWheel")) {
 				UIManager.Instance.TogglePanel("WeaponWheel");
 			} else {
