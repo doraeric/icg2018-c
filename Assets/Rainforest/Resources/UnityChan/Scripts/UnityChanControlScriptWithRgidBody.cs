@@ -5,6 +5,7 @@
 //
 using UnityEngine;
 using System.Collections;
+using Input = CharacterInput;
 
 // 必要なコンポーネントの列記
 [RequireComponent(typeof (Animator))]
