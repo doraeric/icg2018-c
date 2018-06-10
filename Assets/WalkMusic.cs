@@ -6,7 +6,7 @@ public class WalkMusic : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Destroy(this.gameObject, 0.02f);
+        Destroy(this.gameObject, 0.01f);
 	}
 	
 	// Update is called once per frame
