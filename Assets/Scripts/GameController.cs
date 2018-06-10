@@ -8,7 +8,6 @@ public class GameController : MonoBehaviour {
 		UIManager.Instance.CreatePanel("HealthPanel");
 		UIManager.Instance.CreatePanel("WeaponWheel");
 		pause = UIManager.Instance.CreatePanel("PausePanel");
-		UIManager.Instance.CreatePanel("BloodPanel");
 		UIManager.Instance.TogglePanel("PausePanel", false);
 		UIManager.Instance.TogglePanel("WeaponWheel", false);
 		if (UIManager.Instance.EventSystemRoot)
