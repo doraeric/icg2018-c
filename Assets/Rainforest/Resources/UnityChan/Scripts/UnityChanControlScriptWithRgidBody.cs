@@ -26,7 +26,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 	// 後退速度
 	public float backwardSpeed = 2.0f;
 	// 旋回速度
-	public float rotateSpeed = 2.0f;
+	public float rotateSpeed = 1.0f;
 	// ジャンプ威力
 	public float jumpPower = 3.0f; 
 	// キャラクターコントローラ（カプセルコライダ）の参照
@@ -69,7 +69,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 	void FixedUpdate ()
 	{
 		float h = Input.GetAxis("Horizontal");				// 入力デバイスの水平軸をhで定義
-		float v = Input.GetAxis("Vertical");				// 入力デバイスの垂直軸をvで定義
+		float v = -Input.GetAxis("Vertical");				// 入力デバイスの垂直軸をvで定義
 		anim.SetFloat("Speed", v);							// Animator側で設定している"Speed"パラメタにvを渡す
 		anim.SetFloat("Direction", h); 						// Animator側で設定している"Direction"パラメタにhを渡す
 		anim.speed = animSpeed;								// Animatorのモーション再生速度に animSpeedを設定する
@@ -186,16 +186,16 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 		}
 	}
 
-	void OnGUI()
-	{
-		GUI.Box(new Rect(Screen.width -260, 10 ,250 ,150), "Interaction");
-		GUI.Label(new Rect(Screen.width -245,30,250,30),"Up/Down Arrow : Go Forwald/Go Back");
-		GUI.Label(new Rect(Screen.width -245,50,250,30),"Left/Right Arrow : Turn Left/Turn Right");
-		GUI.Label(new Rect(Screen.width -245,70,250,30),"Hit Space key while Running : Jump");
-		GUI.Label(new Rect(Screen.width -245,90,250,30),"Hit Spase key while Stopping : Rest");
-		GUI.Label(new Rect(Screen.width -245,110,250,30),"Left Control : Front Camera");
-		GUI.Label(new Rect(Screen.width -245,130,250,30),"Alt : LookAt Camera");
-	}
+	// void OnGUI()
+	// {
+	// 	GUI.Box(new Rect(Screen.width -260, 10 ,250 ,150), "Interaction");
+	// 	GUI.Label(new Rect(Screen.width -245,30,250,30),"Up/Down Arrow : Go Forwald/Go Back");
+	// 	GUI.Label(new Rect(Screen.width -245,50,250,30),"Left/Right Arrow : Turn Left/Turn Right");
+	// 	GUI.Label(new Rect(Screen.width -245,70,250,30),"Hit Space key while Running : Jump");
+	// 	GUI.Label(new Rect(Screen.width -245,90,250,30),"Hit Spase key while Stopping : Rest");
+	// 	GUI.Label(new Rect(Screen.width -245,110,250,30),"Left Control : Front Camera");
+	// 	GUI.Label(new Rect(Screen.width -245,130,250,30),"Alt : LookAt Camera");
+	// }
 
 
 	// キャラクターのコライダーサイズのリセット関数
