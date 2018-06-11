@@ -9,20 +9,25 @@ public class SaveEnergy2Exit : MonoBehaviour {
 	public float saveRate = 1.0f;
 	public float lossRate = -0.5f;
 
-	private float currentRate;		
+	private float currentRate;
 	public float currentEnergy = 0f;
 	public float EnerCapacity = 100f;
 
 	public GameObject portalEffect;
 	public ParticleSystem[] sub;
 
+	bool victory;
 	// public Shader Circle;
-	
+
 	// Update is called once per frame
 	void Update () {
+		if (victory && Input.anyKeyDown) {
+			UIManager.Instance.CloseAllPanel();
+			SceneManager.LoadScene("BeginScene", LoadSceneMode.Single);
+		}
 		if (currentEnergy >= EnerCapacity){
-			SceneManager.LoadScene("BeginScene");
-			Debug.Log("loadScene");
+			UIManager.Instance.TogglePanel("VictoryPanel", true);
+			victory = true;
 		}else if (currentEnergy < 0){
 			currentEnergy = 0;
 		}else{
@@ -53,6 +58,6 @@ public class SaveEnergy2Exit : MonoBehaviour {
 	}
 
 	void setParticleLevel (float l){
-		
+
 	}
 }

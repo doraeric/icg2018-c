@@ -9,8 +9,10 @@ public class GameController : MonoBehaviour {
 		UIManager.Instance.CreatePanel("WeaponWheel");
 		pause = UIManager.Instance.CreatePanel("PausePanel");
 		UIManager.Instance.CreatePanel("BloodPanel");
+		UIManager.Instance.CreatePanel("VictoryPanel");
 		UIManager.Instance.TogglePanel("PausePanel", false);
 		UIManager.Instance.TogglePanel("WeaponWheel", false);
+		UIManager.Instance.TogglePanel("VictoryPanel", false);
 		if (UIManager.Instance.EventSystemRoot)
 			UIManager.Instance.EventSystemRoot.firstSelectedGameObject = pause.FirstSelected;
 	}
