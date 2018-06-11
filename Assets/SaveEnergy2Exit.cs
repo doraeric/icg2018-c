@@ -14,10 +14,9 @@ public class SaveEnergy2Exit : MonoBehaviour {
 	public float EnerCapacity = 100f;
 
 	public GameObject portalEffect;
-	public ParticleSystem[] Circle_H;
-	public ParticleSystem Circle_V;
+	public ParticleSystem[] sub;
 
-	public ParticleSystem pointlight;
+	// public Shader Circle;
 	
 	// Update is called once per frame
 	void Update () {
@@ -31,6 +30,12 @@ public class SaveEnergy2Exit : MonoBehaviour {
 				currentEnergy += saveRate * Time.deltaTime;
 				Debug.Log(currentEnergy);
 			}
+		}
+
+		float rate = (2 * currentEnergy / EnerCapacity) % EnerCapacity;
+
+		for (int i = 0; i < sub.Length; i++ ) {
+			sub[i].startColor = new Color(255, 255, 255, rate);
 		}
 	}
 
@@ -48,5 +53,9 @@ public class SaveEnergy2Exit : MonoBehaviour {
 			inCollider = false;
 			currentRate = lossRate;
 		}
+	}
+
+	void setParticleLevel (float l){
+		
 	}
 }
