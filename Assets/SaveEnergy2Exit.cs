@@ -26,10 +26,7 @@ public class SaveEnergy2Exit : MonoBehaviour {
 		}else if (currentEnergy < 0){
 			currentEnergy = 0;
 		}else{
-			if (inCollider){
-				currentEnergy += saveRate * Time.deltaTime;
-				Debug.Log(currentEnergy);
-			}
+			currentEnergy += currentRate * Time.deltaTime;
 		}
 
 		float rate = (2 * currentEnergy / EnerCapacity) % EnerCapacity;
