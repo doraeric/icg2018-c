@@ -63,8 +63,8 @@ public class BasicBehaviour : MonoBehaviour
 		// Assign to GameManager
 		GameManager.Instance.LocalPlayer = this;
 	}
-    public GameObject RunMusic;
-    public GameObject WalkMusic;
+    // public GameObject RunMusic;
+    // public GameObject WalkMusic;
 	void Update()
 	{
 		// Store the input axes.
@@ -77,7 +77,7 @@ public class BasicBehaviour : MonoBehaviour
 
         if(!IsSprinting() && (h!=0 || v!=0))
         {
-            Instantiate(WalkMusic, Vector2.zero, Quaternion.identity);
+            // Instantiate(WalkMusic, Vector2.zero, Quaternion.identity);
         }
 
 		// Toggle sprint by input.
@@ -88,7 +88,7 @@ public class BasicBehaviour : MonoBehaviour
 		{
 			changedFOV = true;
 			camScript.SetFOV(sprintFOV);
-            Instantiate(RunMusic, Vector2.zero, Quaternion.identity);
+            // Instantiate(RunMusic, Vector2.zero, Quaternion.identity);
 		}
 		else if(changedFOV)
 		{
