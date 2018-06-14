@@ -1,5 +1,5 @@
 ﻿public class PlayerLocator : BasicBehaviour {
-	public void Start() {
+	public void Awake() {
 		GameManager.Instance.LocalPlayer = this;
 	}
 }

@@ -16,8 +16,8 @@ public abstract class NatureHurt : MonoBehaviour {
 	public void Update() {
 		if (hurtCondition() && hurtCoroutine == null) {
 			hurtCoroutine = StartCoroutine(TakeDamege());
-		} else if (!hurtCondition()) {
-			StopCoroutine(TakeDamege());
+		} else if (!hurtCondition() && hurtCoroutine != null) {
+			StopCoroutine(hurtCoroutine);
 			hurtCoroutine = null;
 		}
 	}
