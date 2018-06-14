@@ -617,7 +617,8 @@ MonoBehaviour:
   isPlayer: 1
   projectileVerbose: 0
   muzzle: {fileID: 0}
-  Bulletmusic: {fileID: 0}
+  Bulletmusic: {fileID: 1956232663360732, guid: 509b96da036b44e4f8eb43a5f5c56516,
+    type: 2}
 --- !u!120 &1327220820
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -865,7 +866,7 @@ MonoBehaviour:
   jumpButton: Jump
   jumpHeight: 1.5
   jumpIntertialForce: 10
-  Jumpmusic: {fileID: 0}
+  Jumpmusic: {fileID: 1978837413993348, guid: 8aef9749821d9034dadbab98667af34a, type: 2}
 --- !u!114 &1854658408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -881,8 +882,6 @@ MonoBehaviour:
   turnSmoothing: 0.06
   sprintFOV: 100
   sprintButton: Sprint
-  RunMusic: {fileID: 0}
-  WalkMusic: {fileID: 0}
 --- !u!136 &1854658409
 CapsuleCollider:
   m_ObjectHideFlags: 0
