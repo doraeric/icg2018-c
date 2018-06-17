@@ -5,27 +5,44 @@
 public class TurretShoot : MonoBehaviour {
 
 	[SerializeField]float detectDist = 10;
+	[SerializeField]Transform columnAxis;
+	[SerializeField]Transform rotationalHead;
+	Transform target;
+	Transform orig;
 
 	Shooter weapon;
 	void Awake() {
 		weapon = GetComponent<Shooter>();
 	}
 	void Update () {
-		var player = GameManager.Instance.LocalPlayer;
-		Transform target = player.transform.Find("Center").transform;
-		if (target == null)
-			target = player.transform;
-
-		Transform from = this.transform.Find("Center");
-		if (from == null) {
-			from = this.transform;
+		if (!target) {
+			target = GameManager.Instance.LocalPlayer.transform;
+			if (target.Find("Center")) {
+				target = target.Find("Center").transform;
+			}
 		}
-		float dist = Vector3.Distance(target.position, from.position);
+
+		if (!orig) {
+			orig = transform.Find("Center");
+			if (orig == null) {
+				orig = transform;
+			}
+		}
+
+		float dist = Vector3.Distance(target.position, orig.position);
 		if (dist < detectDist) {
-			Vector3 relativePos = target.position - from.position;
-			Quaternion toRotation = Quaternion.LookRotation(relativePos);
-			// transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, Time.time * 0.1f);
-			transform.rotation = toRotation;
+			if (columnAxis) {
+				Vector3 relativePos = target.position - orig.position;
+				columnAxis.rotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
+			} else {
+				Vector3 relativePos = target.position - orig.position;
+				transform.rotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
+			}
+			if (rotationalHead) {
+				rotationalHead.LookAt(target);
+			} else {
+				transform.LookAt(target);
+			}
 			weapon.Fire();
 		}
 	}

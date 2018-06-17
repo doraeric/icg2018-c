@@ -9,7 +9,7 @@ public class Shooter : MonoBehaviour {
 	[SerializeField]bool isPlayer;
 	[SerializeField]bool projectileVerbose;
 
-	[HideInInspector]
+	// [HideInInspector]
 	public Transform muzzle;
 
 	float nextFireAllowed;
@@ -17,7 +17,8 @@ public class Shooter : MonoBehaviour {
 	private LineRenderer laserLine;
 
 	void Awake() {
-		muzzle = transform.Find("Muzzle");
+		if (!muzzle)
+			muzzle = transform.Find("Muzzle");
 		if (isPlayer) laserLine = GetComponent<LineRenderer>();
 	}
 
